@@ -1,0 +1,40 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/ErikEJ/EFCorePowerTools/master/samples/efcpt-schema.json",
+  "code-generation": {
+    "enable-on-configuring": false,
+    "type": "all",
+    "use-database-names": false,
+    "use-data-annotations": false,
+    "use-nullable-reference-types": true,
+    "use-inflector": false,
+    "use-legacy-inflector": false,
+    "use-many-to-many-entity": false,
+    "use-t4": false,
+    "t4-template-path": null,
+    "remove-defaultsql-from-bool-properties": false,
+    "soft-delete-obsolete-files": false,
+    "discover-multiple-stored-procedure-resultsets-preview": false,
+    "use-alternate-stored-procedure-resultset-discovery": false
+  },
+  "names": {
+    "root-namespace": "Library",
+    "dbcontext-name": "LibraryContext",
+    "dbcontext-namespace": null,
+    "model-namespace": null
+  },
+  "file-layout": {
+    "output-path": "Models",
+    "output-dbcontext-path": null
+  },
+  "tables": [
+    {
+      "name": "[dbo].[books]"
+    },
+    {
+      "name": "[dbo].[user]"
+    },
+    {
+      "name": "[dbo].[user_books]"
+    }
+  ]
+}
