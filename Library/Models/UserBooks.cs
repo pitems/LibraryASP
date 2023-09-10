@@ -15,5 +15,5 @@ public partial class UserBooks
 
     public virtual Books? FkBooksNavigation { get; set; }
 
-    public virtual User? FkUserNavigation { get; set; }
+    public virtual AppUser? FkUserNavigation { get; set; }
 }

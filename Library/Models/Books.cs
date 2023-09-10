@@ -17,5 +17,9 @@ public partial class Books
 
     public int Rented { get; set; }
 
+    public string? Comment { get; set; }
+
+    public string? Description { get; set; }
+
     public virtual ICollection<UserBooks> UserBooks { get; set; } = new List<UserBooks>();
 }
