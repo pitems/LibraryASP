@@ -8,7 +8,6 @@ namespace Library.Models;
 
 public partial class AppUser :IdentityUser
 {
-    public int Id { get; set; }
 
     public int? BooksRented { get; set; }
 

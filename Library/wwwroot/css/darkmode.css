@@ -1,0 +1,11 @@
+/* Dark Mode Styles */
+.dark-mode-body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+/* Other element styles for dark mode */
+.dark-mode-content {
+    background-color: #333333;
+    color: #ffffff;
+}

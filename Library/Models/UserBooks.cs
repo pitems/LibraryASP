@@ -9,7 +9,7 @@ public partial class UserBooks
 {
     public int Id { get; set; }
 
-    public int? FkUser { get; set; }
+    public String FkUser { get; set; }
 
     public int? FkBooks { get; set; }
 

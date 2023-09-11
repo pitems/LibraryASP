@@ -93,6 +93,29 @@ namespace Library.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Library.Models.Author", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("AuthorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BooksWritten")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Popularity")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Authors");
+                });
+
             modelBuilder.Entity("Library.Models.Books", b =>
                 {
                     b.Property<int>("Id")
@@ -104,9 +127,8 @@ namespace Library.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<string>("AuthorName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
 
                     b.Property<string>("BookName")
                         .IsRequired()
@@ -123,6 +145,8 @@ namespace Library.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AuthorId");
+
                     b.ToTable("Books");
                 });
 
@@ -137,18 +161,16 @@ namespace Library.Migrations
                     b.Property<int?>("FkBooks")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FkBooksNavigationId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FkUser")
-                        .HasColumnType("int");
+                    b.Property<string>("FkUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FkUserNavigationId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FkBooksNavigationId");
+                    b.HasIndex("FkBooks");
 
                     b.HasIndex("FkUserNavigationId");
 
@@ -288,11 +310,23 @@ namespace Library.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Library.Models.Books", b =>
+                {
+                    b.HasOne("Library.Models.Author", "Author")
+                        .WithMany("Books")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+                });
+
             modelBuilder.Entity("Library.Models.UserBooks", b =>
                 {
                     b.HasOne("Library.Models.Books", "FkBooksNavigation")
                         .WithMany("UserBooks")
-                        .HasForeignKey("FkBooksNavigationId");
+                        .HasForeignKey("FkBooks")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Library.Models.AppUser", "FkUserNavigation")
                         .WithMany("UserBooks")
@@ -357,6 +391,11 @@ namespace Library.Migrations
             modelBuilder.Entity("Library.Models.AppUser", b =>
                 {
                     b.Navigation("UserBooks");
+                });
+
+            modelBuilder.Entity("Library.Models.Author", b =>
+                {
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("Library.Models.Books", b =>

@@ -10,20 +10,27 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <h1>Books</h1>
-        <a href="#" class="btn btn-success rounded">
-                    <i class="fas fa-plus"></i>Add
-                </a>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("admin")){
+            <a class="btn btn-success rounded" asp-controller="Book" asp-action="Add">
+                <i class="fas fa-plus"></i>Add
+            </a>
+        }
+    
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         @foreach (var item in Model)
         {
             <div class="col">
-                <div class="card" style="width: 18rem;">
+                <div class="card" style="width: 18rem;color: #1a1a1a">
                     <img src="~/Assets/moffa.png" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">@item.BookName</h5>
-                        <p class="card-text">@item.AuthorName</p>
+                        <p class="card-text">@item.Author.AuthorName</p>
                         <a type="button" class="btn btn-primary" asp-controller="Book" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                      @if (User.Identity.IsAuthenticated && User.IsInRole("admin")){
+                          <a type="button" class="btn btn-danger" asp-controller="Book" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                      }
+                       
                     </div>
                 </div>
             </div>

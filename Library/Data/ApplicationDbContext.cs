@@ -19,5 +19,26 @@ public partial class ApplicationDbContext : IdentityDbContext<AppUser>
     public virtual DbSet<AppUser> AppUser { get; set; }
 
     public virtual DbSet<UserBooks> UserBooks { get; set; }
+
+    public virtual DbSet<Author> Authors { get; set; }
     
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        // Configure the relationship between UserBooks and Books here
+        modelBuilder.Entity<UserBooks>()
+            .HasKey(ub => ub.Id); // Assuming Id is the primary key for UserBooks
+
+        modelBuilder.Entity<UserBooks>()
+            .Property(ub => ub.Id)
+            .ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<UserBooks>()
+            .HasOne(ub => ub.FkBooksNavigation) // Navigation property
+            .WithMany(b => b.UserBooks) // Collection navigation property on Books
+            .HasForeignKey(ub => ub.FkBooks) // Foreign key property in UserBooks
+            .OnDelete(DeleteBehavior.Restrict); // Define the delete behavior as needed
+    }
 }

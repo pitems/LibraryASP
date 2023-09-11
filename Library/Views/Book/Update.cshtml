@@ -1,0 +1,53 @@
+@model Library.ViewModel.EditBookViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Editing book : @Model.BookName</h2>
+
+
+<div>
+    <form method="post" asp-action="Update" enctype="multipart/form-data">
+        <input type="hidden" value="Authors" id="Authors">
+        @Html.Hidden("AddressId", Model.id)
+       
+        <div class="form-group">
+            <label asp-for="Amount">Amount</label>
+            <input asp-for="Amount" class="form-control" placeholder="Enter Title">
+            <span asp-validation-for="Amount" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description">Description</label>
+            <input asp-for="Description" class="form-control" placeholder="Description">
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Comment">Comment</label>
+           <input asp-for="Comment" class="form-control" placeholder="Description">
+            <span asp-validation-for="Comment" class="text-danger"></span>
+        </div>
+          <div class="form-group">
+                <label for="AuthorId">Select an Author:</label>
+                <select asp-for="AuthorId" class="form-control">
+                    <option value="">Select an Author</option>
+                    @foreach (var author in ViewBag.Authors)
+                    {
+                        <option value="@author.ID">@author.AuthorName</option>
+                    }
+                </select>
+            </div>
+
+
+         <div class="form-group">
+            <label asp-for="BookName">Book Name</label>
+            <input asp-for="BookName" class="form-control" placeholder="Description">
+            <span asp-validation-for="BookName" class="text-danger"></span>
+        </div>
+        <div style="margin-bottom: 10px"></div>
+
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>

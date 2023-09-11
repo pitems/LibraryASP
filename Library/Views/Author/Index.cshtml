@@ -1,0 +1,48 @@
+@model IEnumerable<Library.Models.Author>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <h1>Authors</h1>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("admin")){
+        <a class="btn btn-success rounded" asp-controller="Author" asp-action="Add">
+            <i class="fas fa-plus"></i>Add
+        </a>
+    }
+    
+</div>
+<div style="padding-bottom: 10px"></div>
+<div class="container">
+    @* <h3>Author Information</h3> *@
+    <table class="table">
+        <thead>
+        <tr style="color: white">
+            <th>Name</th>
+            <th>Books Written</th>
+            <th>Popularity</th>
+            <th>Books Written</th>
+            <th>Actions</th>
+        </tr>
+       
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="color: white">
+                <td>@item.AuthorName</td>
+                <td>@item.BooksWritten</td>
+                <td>@item.Popularity%</td>
+                <td>@item.BooksWritten</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Author" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                    <a class="btn btn-danger" href="#">Delete</a>
+                    <a class="btn btn-info" href="#">View Details</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

@@ -8,18 +8,15 @@ namespace Library.Models;
 public partial class Books
 {
     public int Id { get; set; }
+    public int AuthorId { get; set; } // Foreign key property
 
     public int Amount { get; set; }
-
     public string BookName { get; set; } = null!;
-
-    public string AuthorName { get; set; } = null!;
-
     public int Rented { get; set; }
-
     public string? Comment { get; set; }
-
     public string? Description { get; set; }
 
+    // Navigation property to Author
+    public virtual Author Author { get; set; }
     public virtual ICollection<UserBooks> UserBooks { get; set; } = new List<UserBooks>();
 }

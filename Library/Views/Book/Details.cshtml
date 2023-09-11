@@ -1,12 +1,18 @@
 @model Books
 
 @{
-  
+    var errorMessage = TempData["ErrorMessage"] as String;
 }
 
 <!DOCTYPE html>
 <div class="container">
 
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">
+        @errorMessage
+    </div>
+}
     <!-- Portfolio Item Heading -->
     <h1 class="my-4">
         Details of : @Model.BookName
@@ -21,17 +27,24 @@
         </div>
 
         <div class="col-md-4">
-            <h3 class="my-3">@Model.AuthorName</h3>
+            <h3 class="my-3">@Model.Author.AuthorName</h3>
             <p>Amount of Books @Model.Amount</p>
             <h3 class="my-3">Rented</h3>
             <p>Rented @Model.Rented</p>
             <h3>Commentary</h3>
             <p>@Model.Comment</p>
-            @* <ul> *@
-            @*     <li>@Model.Address.City</li> *@
-            @*     <li>@Model.Address.State</li> *@
-            @*     <li>@Model.ClubCategory</li> *@
-            @* </ul> *@
+            
+            <h4>About the book</h4>
+            <p>@Model.Description</p>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("user")){
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Rent
+                </button>
+            }
+            @if (User.Identity.IsAuthenticated && User.IsInRole("admin")){
+                <a type="button" class="btn btn-outline-success" asp-controller="Book" asp-action="Update" asp-route-id="@Model.Id">Update</a>
+            }
+            
         </div>
 
     </div>
@@ -67,5 +80,29 @@
 
     </div>
     <!-- /.row -->
+    
+</div>
 
+<!-- Button trigger modal -->
+@* <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> *@
+@*     Launch demo modal *@
+@* </button> *@
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="color: #1a1a1a" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Do you want to rent this book?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Renting this book will be added to your account
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a type="button" class="btn btn-outline-success" asp-controller="Book" asp-action="Rent" asp-route-id="@Model.Id">Rent Book</a>
+            </div>
+        </div>
+    </div>
 </div>

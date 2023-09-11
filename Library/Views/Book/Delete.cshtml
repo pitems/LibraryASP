@@ -1,0 +1,48 @@
+@model Books
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Are you sure you want to delete @Model.BookName</h2>
+
+<div>
+    <form method="post" asp-action="Delete" enctype="multipart/form-data">
+        @* <input type="hidden" value="AddressId" id="AddressId"> *@
+       
+        <div class="form-group">
+            <label asp-for="Amount">Amount</label>
+            <input asp-for="Amount" class="form-control" placeholder="Enter Title">
+            <span asp-validation-for="Amount" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description">Description</label>
+            <input asp-for="Description" class="form-control" placeholder="Description">
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Comment">Comment</label>
+            <input asp-for="Comment" class="form-control" placeholder="Description">
+            <span asp-validation-for="Comment" class="text-danger"></span>
+        </div>
+        
+
+        <div class="form-group">
+            <label asp-for="BookName">Book Name</label>
+            <input asp-for="BookName" class="form-control" placeholder="Description">
+            <span asp-validation-for="BookName" class="text-danger"></span>
+        </div>
+        <div style="margin-bottom: 10px"></div>
+
+       
+    </form>
+    <div class='form-group'>
+        <form action="Delete" method="post">
+            @Html.Hidden("Id")
+              <input type="submit"  value="Delete" class="btn btn-danger float-right mt-3"/>
+        </form>
+          
+    </div>
+</div>
